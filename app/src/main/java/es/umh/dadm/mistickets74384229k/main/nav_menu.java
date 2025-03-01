@@ -1,19 +1,15 @@
-package es.umh.dadm.mistickets74384229k;
+package es.umh.dadm.mistickets74384229k.main;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TicketsFragment#newInstance} factory method to
+ * Use the {@link nav_menu#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TicketsFragment extends Fragment {
+public class nav_menu extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +20,7 @@ public class TicketsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TicketsFragment() {
+    public nav_menu() {
         // Required empty public constructor
     }
 
@@ -34,11 +30,11 @@ public class TicketsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TicketsFragment.
+     * @return A new instance of fragment nav_menu.
      */
     // TODO: Rename and change types and number of parameters
-    public static TicketsFragment newInstance(String param1, String param2) {
-        TicketsFragment fragment = new TicketsFragment();
+    public static nav_menu newInstance(String param1, String param2) {
+        nav_menu fragment = new nav_menu();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -53,12 +49,5 @@ public class TicketsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tickets, container, false);
     }
 }

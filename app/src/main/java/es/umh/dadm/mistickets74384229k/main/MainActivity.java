@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import es.umh.dadm.mistickets74384229k.Categoria.CategoriasFragment;
 import es.umh.dadm.mistickets74384229k.R;
+import es.umh.dadm.mistickets74384229k.Ticket.TicketsFragment;
 import es.umh.dadm.mistickets74384229k.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

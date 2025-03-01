@@ -1,17 +1,15 @@
-package es.umh.dadm.mistickets74384229k.main;
+package es.umh.dadm.mistickets74384229k.Categoria;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.sax.Element;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import es.umh.dadm.mistickets74384229k.Adaptador.ElementoListaAdaptador;
-import es.umh.dadm.mistickets74384229k.Categoria.Categoria;
+import es.umh.dadm.mistickets74384229k.Adaptador.AdaptadorCategoria;
 import es.umh.dadm.mistickets74384229k.R;
 
 /**
@@ -25,20 +23,13 @@ public class CategoriasFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private View view;
-    private ElementoListaAdaptador adapter;
+    private AdaptadorCategoria adapter;
     private ListView lvCat;
     private String mParam1;
     private String mParam2;
 
     public CategoriasFragment() {
         // Required empty public constructor
-    }
-
-    private void cargarCategorias()
-    {
-        lvCat = (ListView) view.findViewById(R.id.listViewCat);
-        adapter = new ElementoListaAdaptador(requireContext(), Categoria.getArrCat());
-        lvCat.setAdapter(adapter);
     }
     public static CategoriasFragment newInstance(String param1, String param2) {
         CategoriasFragment fragment = new CategoriasFragment();
@@ -67,5 +58,11 @@ public class CategoriasFragment extends Fragment {
         return view;
     }
 
-
+    private void cargarCategorias()
+    {
+        lvCat = (ListView) view.findViewById(R.id.listViewCat);
+        Categoria.inicializarCategorias();
+        adapter = new AdaptadorCategoria(requireContext(), R.layout.layout_lv_cat, Categoria.getArrCat());
+        lvCat.setAdapter(adapter);
+    }
 }

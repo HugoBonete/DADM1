@@ -1,4 +1,4 @@
-package es.umh.dadm.mistickets74384229k.main;
+package es.umh.dadm.mistickets74384229k.Ticket;
 
 import android.os.Bundle;
 

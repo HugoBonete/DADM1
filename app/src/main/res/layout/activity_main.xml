@@ -22,7 +22,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView"
-            android:name="es.umh.dadm.mistickets74384229k.main.TicketsFragment"
+            android:name="es.umh.dadm.mistickets74384229k.Ticket.TicketsFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"

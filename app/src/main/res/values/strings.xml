@@ -5,4 +5,10 @@
     <string name="nav_categorias">Categorias</string>
     <string name="nav_home">Inicio</string>
     <string name="nav_tickets">Tickets</string>
+    <string name = "nueva_cat_tit">Nueva Categoria</string>
+    <string name = "form_hint_nombre">Nombre</string>
+    <string name = "form_hint_desc1">Descripcion Corta</string>
+    <string name = "form_hint_desc2">Descripcion Larga</string>
+    <string name = "form_hint_img">Imagen</string>
+    <string name = "form_btn_crearCat">Crear Categoria</string>
 </resources>

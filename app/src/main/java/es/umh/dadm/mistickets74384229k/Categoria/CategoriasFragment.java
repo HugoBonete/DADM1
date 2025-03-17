@@ -3,7 +3,9 @@ package es.umh.dadm.mistickets74384229k.Categoria;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import es.umh.dadm.mistickets74384229k.Adaptador.AdaptadorCategoria;
 import es.umh.dadm.mistickets74384229k.R;
+import es.umh.dadm.mistickets74384229k.Util.DialogBorroso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,6 +63,16 @@ public class CategoriasFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_categorias, container, false);
         cargarCategorias();
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_cat);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogBorroso dialog = new DialogBorroso();
+                dialog.show(getParentFragmentManager(), "BlurDialog");
+            }
+        });
+
         return view;
     }
 
@@ -66,7 +81,7 @@ public class CategoriasFragment extends Fragment {
         lvCat = view.findViewById(R.id.recyclerViewCat);
         Categoria.inicializarCategorias();
         adapter = new AdaptadorCategoria(requireContext(), Categoria.getArrCat());
-        lvCat.setLayoutManager(new LinearLayoutManager(requireContext()));
+        lvCat.setLayoutManager(new GridLayoutManager(getContext(), 2));
         lvCat.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

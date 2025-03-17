@@ -31,6 +31,8 @@ public class AdaptadorCategoria extends RecyclerView.Adapter<AdaptadorCategoria.
 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.cat_cell, parent, false);
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         return new ViewHolder(view);
     }
 

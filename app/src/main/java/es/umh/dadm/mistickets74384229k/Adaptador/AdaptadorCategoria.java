@@ -10,46 +10,51 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.umh.dadm.mistickets74384229k.Categoria.Categoria;
 import es.umh.dadm.mistickets74384229k.R;
 
-public class AdaptadorCategoria extends ArrayAdapter<Categoria> {
+public class AdaptadorCategoria extends RecyclerView.Adapter<AdaptadorCategoria.ViewHolder> {
 
     private  Context context;
-    private int resource;
-    private List<Categoria> objects;
-    public AdaptadorCategoria(@NonNull Context context, int resource, @NonNull List<Categoria> objects) {
-        super(context, resource, objects);
+    private ArrayList<Categoria> listaCategorias;
+    public AdaptadorCategoria(@NonNull Context context, @NonNull ArrayList<Categoria> listaCategorias) {
         this.context = context;
-        this.resource = resource;
-        this.objects = objects;
+        this.listaCategorias = listaCategorias;
     }
 
-    @NonNull
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.cat_cell, parent, false);
+        return new ViewHolder(view);
+    }
+
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Categoria categoria = listaCategorias.get(position);
+        holder.image.setImageResource(categoria.getImage());
+        holder.nombre.setText(categoria.getNombreCat());
+        holder.descCorta.setText(categoria.getDescrCorta());
+    }
+
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View view = convertView;
+    public int getItemCount() {
+        return listaCategorias.size();
+    }
 
-        if(view == null)
-        {
-            view = LayoutInflater.from(context).inflate(resource, null);
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView image;
+        TextView nombre, descCorta;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            image = itemView.findViewById(R.id.img_cat);
+            nombre = itemView.findViewById(R.id.nom_cat);
+            descCorta = itemView.findViewById(R.id.desc_cort_cat);
         }
-        Categoria cat = objects.get(position);
-
-        ImageView image = view.findViewById(R.id.img_cat);
-        image.setImageResource(cat.getImage());
-
-        TextView nombre = view.findViewById(R.id.nom_cat);
-        nombre.setText(cat.getNombreCat());
-
-        TextView descCorta = view.findViewById(R.id.desc_cort_cat);
-        descCorta.setText(cat.getDescrCorta());
-
-        return view;
     }
 }

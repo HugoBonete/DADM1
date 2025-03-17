@@ -1,8 +1,11 @@
 package es.umh.dadm.mistickets74384229k.Categoria;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +27,7 @@ public class CategoriasFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private View view;
     private AdaptadorCategoria adapter;
-    private ListView lvCat;
+    private RecyclerView lvCat;
     private String mParam1;
     private String mParam2;
 
@@ -60,9 +63,11 @@ public class CategoriasFragment extends Fragment {
 
     private void cargarCategorias()
     {
-        lvCat = (ListView) view.findViewById(R.id.listViewCat);
+        lvCat = view.findViewById(R.id.recyclerViewCat);
         Categoria.inicializarCategorias();
-        adapter = new AdaptadorCategoria(requireContext(), R.layout.layout_lv_cat, Categoria.getArrCat());
+        adapter = new AdaptadorCategoria(requireContext(), Categoria.getArrCat());
+        lvCat.setLayoutManager(new LinearLayoutManager(requireContext()));
         lvCat.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

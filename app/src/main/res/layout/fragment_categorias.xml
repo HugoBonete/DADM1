@@ -10,32 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/scrollView2"
-            android:layout_width="418dp"
-            android:layout_height="511dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ListView
-                    android:id="@+id/listViewCat"
-                    android:layout_width="match_parent"
-                    android:layout_height="491dp"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </LinearLayout>
-        </ScrollView>
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="413dp"
@@ -49,18 +23,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/textView"
+            app:layout_constraintBottom_toTopOf="@id/floatingActionButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        />
 
-        <Button
-            android:id="@+id/button2"
-            style="@style/Widget.AppCompat.Button"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="162dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="161dp"
+            android:layout_marginStart="177dp"
+            android:layout_marginEnd="178dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:src="@drawable/baseline_add_box_24"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

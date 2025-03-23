@@ -1,20 +1,48 @@
 package es.umh.dadm.mistickets74384229k.Categoria;
 
+import static android.content.ContentValues.TAG;
+
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import es.umh.dadm.mistickets74384229k.Adaptador.AdaptadorCategoria;
 import es.umh.dadm.mistickets74384229k.R;
@@ -33,8 +61,10 @@ public class CategoriasFragment extends Fragment {
     private View view;
     private AdaptadorCategoria adapter;
     private RecyclerView lvCat;
-    private String mParam1;
-    private String mParam2;
+
+    private static final String FICHERO = "categorias.json";
+    private static final String TAG = "Categorias";
+
 
     public CategoriasFragment() {
         // Required empty public constructor
@@ -51,10 +81,6 @@ public class CategoriasFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -62,27 +88,130 @@ public class CategoriasFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_categorias, container, false);
-        cargarCategorias();
-
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_cat);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogBorroso dialog = new DialogBorroso();
+                DialogBorroso dialog = new DialogBorroso(CategoriasFragment.this);
                 dialog.show(getParentFragmentManager(), "BlurDialog");
             }
         });
+        obtenerCategorias();
 
+        getParentFragmentManager().setFragmentResultListener("nuevaCategoria", this, (requestKey, result) -> {
+            if (result.getBoolean("categoriaAgregada"))
+            {
+                obtenerCategorias();
+            }
+        });
         return view;
     }
 
-    private void cargarCategorias()
+    private void obtenerCategorias()
     {
+        // Cargar las categorías desde el archivo
+        ArrayList<Categoria> categoriasGuardadas = cargarTexto();
+
+        // Reemplazar la lista actual con la lista cargada
+        Categoria.getArrCat().clear();
+        Categoria.getArrCat().addAll(categoriasGuardadas);
+
         lvCat = view.findViewById(R.id.recyclerViewCat);
-        Categoria.inicializarCategorias();
         adapter = new AdaptadorCategoria(requireContext(), Categoria.getArrCat());
         lvCat.setLayoutManager(new GridLayoutManager(getContext(), 2));
         lvCat.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
+
+
+
+    /*private ArrayList<Categoria> cargarTexto() {
+        try {
+            // Abrir el archivo desde el almacenamiento interno
+            FileInputStream fis = requireContext().openFileInput("categorias.json");
+            int size = fis.available();
+            byte[] buffer = new byte[size];
+            fis.read(buffer);
+            fis.close();
+
+            String json = new String(buffer, StandardCharsets.UTF_8);
+
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<Categoria>>() {}.getType();
+            return gson.fromJson(json, listType);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }*/
+
+    public ArrayList<Categoria> cargarTexto() {
+        File raiz = requireContext().getExternalFilesDir(null);
+        if (raiz == null) return new ArrayList<>();
+
+        File fichero = new File(raiz, "categorias.json");
+        if (!fichero.exists()) return new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(fichero))) {
+            Type listType = new TypeToken<ArrayList<Categoria>>() {}.getType();
+            return new Gson().fromJson(reader, listType);
+        } catch (IOException e) {
+            Log.e(TAG, "Error al leer el archivo JSON", e);
+            return new ArrayList<>();
+        }
+    }
+
+    public void guardarCategoria(Categoria categoria)
+    {
+        if (!puedoEscribirMemoriaExterna()) {
+            Toast.makeText(getContext(), R.string.no_disponible, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        File raiz = requireContext().getExternalFilesDir(null);
+        File fichero = new File(raiz, "categorias.json");
+        Log.d(TAG, "guardarJson: la raíz es " + raiz.getAbsolutePath());
+
+        Gson gson = new Gson();
+        List<Categoria> listaCategorias = new ArrayList<>();
+
+        // Si el archivo existe, cargar su contenido en la lista
+        if (fichero.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(fichero))) {
+                Type listType = new TypeToken<ArrayList<Categoria>>() {}.getType();
+                listaCategorias = gson.fromJson(reader, listType);
+                if (listaCategorias == null) {
+                    listaCategorias = new ArrayList<>();
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "guardarJson: Error al leer el archivo", e);
+            }
+        }
+
+        // Agregar la nueva categoría
+        listaCategorias.add(categoria);
+
+        // Convertir la lista actualizada a JSON
+        String jsonString = gson.toJson(listaCategorias);
+
+        // Guardar JSON en el fichero
+        try (BufferedWriter buf = new BufferedWriter(new FileWriter(fichero))) {
+            buf.write(jsonString);
+            buf.flush();
+        } catch (IOException e) {
+            Log.e(TAG, "guardarJson: IOException", e);
+        }
+    }
+
+    private boolean puedoEscribirMemoriaExterna() {
+        String estado = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(estado);
+    }
+
+    private boolean puedoLeerMemoriaExterna()
+    {
+        String state = Environment.getExternalStorageState();
+        return (state.equals(Environment.MEDIA_MOUNTED));
+    }
+
 }

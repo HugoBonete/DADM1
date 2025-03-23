@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import es.umh.dadm.mistickets74384229k.Categoria.Categoria;
 import es.umh.dadm.mistickets74384229k.Categoria.CategoriasFragment;
 import es.umh.dadm.mistickets74384229k.R;
 import es.umh.dadm.mistickets74384229k.Ticket.TicketsFragment;
@@ -19,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Usa ViewBinding correctamente
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             replaceFrag(new InicioFragment());
         }
-
+        Categoria.inicializarCategorias();
         // Manejo de la navegación inferior
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (R.id.home == item.getItemId()) {

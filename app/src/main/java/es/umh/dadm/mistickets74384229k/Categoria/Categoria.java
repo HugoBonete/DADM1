@@ -11,6 +11,7 @@ public class Categoria
     private String descrCorta;
     private String descLarga;
     private int image;
+    private static boolean inizializadas = false;
     private static ArrayList<Categoria> arrCat = new ArrayList<>();
 
     // Constructor
@@ -69,6 +70,7 @@ public class Categoria
 
     // Funciones para agregar y eliminar categorías
     public static void addCat(Categoria cat) {
+        cat.id = contadorId++;
         arrCat.add(cat);
     }
 
@@ -79,8 +81,13 @@ public class Categoria
     // Método para inicializar 20 categorías por defecto
     public static void inicializarCategorias()
     {
-            for(int i = 0; i < 10; i++) {
+        if(inizializadas == false)
+        {
+            for(int i = 0; i < 10; i++)
+            {
                 new Categoria("a " + i, "b " + i, "c " + i, R.mipmap.ic_launcher);
             }
+            inizializadas = true;
+        }
     }
 }

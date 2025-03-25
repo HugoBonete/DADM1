@@ -10,12 +10,12 @@ public class Categoria
     private String nombreCat;
     private String descrCorta;
     private String descLarga;
-    private int image;
+    private String image;
     private static boolean inizializadas = false;
     private static ArrayList<Categoria> arrCat = new ArrayList<>();
 
     // Constructor
-    public Categoria(String nombreCat, String descrCorta, String descLarga, int image)
+    public Categoria(String nombreCat, String descrCorta, String descLarga, String image)
     {
         this.id = contadorId++; // Se incrementa el ID estático en cada nueva instancia
         this.nombreCat = nombreCat;
@@ -28,15 +28,18 @@ public class Categoria
     }
 
     // Getters y Setters
-    public int getImage() {
+    public String getImage()
+    {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image)
+    {
         this.image = image;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
@@ -44,15 +47,18 @@ public class Categoria
         return nombreCat;
     }
 
-    public void setNombreCat(String nombreCat) {
+    public void setNombreCat(String nombreCat)
+    {
         this.nombreCat = nombreCat;
     }
 
-    public String getDescrCorta() {
+    public String getDescrCorta()
+    {
         return descrCorta;
     }
 
-    public void setDescrCorta(String descrCorta) {
+    public void setDescrCorta(String descrCorta)
+    {
         this.descrCorta = descrCorta;
     }
 
@@ -60,11 +66,13 @@ public class Categoria
         return descLarga;
     }
 
-    public void setDescLarga(String descLarga) {
+    public void setDescLarga(String descLarga)
+    {
         this.descLarga = descLarga;
     }
 
-    public static ArrayList<Categoria> getArrCat() {
+    public static ArrayList<Categoria> getArrCat()
+    {
         return arrCat;
     }
 
@@ -74,20 +82,9 @@ public class Categoria
         arrCat.add(cat);
     }
 
-    public static void deleteCat(Categoria cat) {
+    public static void deleteCat(Categoria cat)
+    {
         arrCat.remove(cat);
     }
 
-    // Método para inicializar 20 categorías por defecto
-    public static void inicializarCategorias()
-    {
-        if(inizializadas == false)
-        {
-            for(int i = 0; i < 10; i++)
-            {
-                new Categoria("a " + i, "b " + i, "c " + i, R.mipmap.ic_launcher);
-            }
-            inizializadas = true;
-        }
-    }
 }

@@ -27,7 +27,7 @@
             android:id="@+id/txt_cat_descort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="41dp"
+            android:layout_marginTop="36dp"
             android:hint="@string/form_hint_desc1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,16 +42,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_cat_descort" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_cat_img"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="41dp"
-            android:hint="@string/form_hint_img"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_cat_desclarg" />
 
         <TextView
             android:id="@+id/textView2"
@@ -69,11 +59,34 @@
             android:id="@+id/crear_cat_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="62dp"
+            android:layout_marginTop="25dp"
             android:text="@string/form_btn_crearCat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_cat_img" />
+            app:layout_constraintTop_toBottomOf="@+id/fab_add_img_cat" />
+
+        <ImageView
+            android:id="@+id/img_cat"
+            android:layout_width="147dp"
+            android:layout_height="132dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_cat_desclarg"
+            app:srcCompat="@drawable/baseline_add_a_photo_24" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_img_cat"
+            android:layout_width="36dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="24dp"
+            android:clickable="true"
+            android:tint="#00FFFFFF"
+            app:backgroundTint="#494949"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_cat" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

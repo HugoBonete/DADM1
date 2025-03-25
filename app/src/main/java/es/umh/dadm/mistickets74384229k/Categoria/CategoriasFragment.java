@@ -1,18 +1,9 @@
 package es.umh.dadm.mistickets74384229k.Categoria;
 
-import static android.content.ContentValues.TAG;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
@@ -20,12 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.reflect.TypeToken;
@@ -33,20 +20,15 @@ import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import es.umh.dadm.mistickets74384229k.Adaptador.AdaptadorCategoria;
 import es.umh.dadm.mistickets74384229k.R;
-import es.umh.dadm.mistickets74384229k.Util.DialogBorroso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -123,29 +105,8 @@ public class CategoriasFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-
-
-    /*private ArrayList<Categoria> cargarTexto() {
-        try {
-            // Abrir el archivo desde el almacenamiento interno
-            FileInputStream fis = requireContext().openFileInput("categorias.json");
-            int size = fis.available();
-            byte[] buffer = new byte[size];
-            fis.read(buffer);
-            fis.close();
-
-            String json = new String(buffer, StandardCharsets.UTF_8);
-
-            Gson gson = new Gson();
-            Type listType = new TypeToken<List<Categoria>>() {}.getType();
-            return gson.fromJson(json, listType);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }*/
-
-    public ArrayList<Categoria> cargarTexto() {
+    public ArrayList<Categoria> cargarTexto()
+    {
         File raiz = requireContext().getExternalFilesDir(null);
         if (raiz == null) return new ArrayList<>();
 

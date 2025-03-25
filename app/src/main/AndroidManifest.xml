@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Mistickets74384229k"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31"
         android:requestLegacyExternalStorage="true"> <!-- Permiso para Android 10+ -->
 

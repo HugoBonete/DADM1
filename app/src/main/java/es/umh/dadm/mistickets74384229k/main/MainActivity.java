@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             replaceFrag(new InicioFragment());
         }
-        Categoria.inicializarCategorias();
         // Manejo de la navegación inferior
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (R.id.home == item.getItemId()) {

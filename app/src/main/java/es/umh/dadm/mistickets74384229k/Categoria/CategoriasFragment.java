@@ -1,5 +1,6 @@
 package es.umh.dadm.mistickets74384229k.Categoria;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.umh.dadm.mistickets74384229k.Adaptador.AdaptadorCategoria;
+import es.umh.dadm.mistickets74384229k.Interfaz.OnItemClickListener;
 import es.umh.dadm.mistickets74384229k.R;
 
 /**
@@ -35,7 +37,7 @@ import es.umh.dadm.mistickets74384229k.R;
  * Use the {@link CategoriasFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CategoriasFragment extends Fragment {
+public class CategoriasFragment extends Fragment implements OnItemClickListener {
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -99,7 +101,7 @@ public class CategoriasFragment extends Fragment {
         Categoria.getArrCat().addAll(categoriasGuardadas);
 
         lvCat = view.findViewById(R.id.recyclerViewCat);
-        adapter = new AdaptadorCategoria(requireContext(), Categoria.getArrCat());
+        adapter = new AdaptadorCategoria(requireContext(), Categoria.getArrCat(), this);
         lvCat.setLayoutManager(new GridLayoutManager(getContext(), 2));
         lvCat.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -122,8 +124,7 @@ public class CategoriasFragment extends Fragment {
         }
     }
 
-    public void guardarCategoria(Categoria categoria)
-    {
+    public void guardarCategorias() {
         if (!puedoEscribirMemoriaExterna()) {
             Toast.makeText(getContext(), R.string.no_disponible, Toast.LENGTH_LONG).show();
             return;
@@ -131,36 +132,16 @@ public class CategoriasFragment extends Fragment {
 
         File raiz = requireContext().getExternalFilesDir(null);
         File fichero = new File(raiz, "categorias.json");
-        Log.d(TAG, "guardarJson: la raíz es " + raiz.getAbsolutePath());
 
         Gson gson = new Gson();
-        List<Categoria> listaCategorias = new ArrayList<>();
+        String jsonString = gson.toJson(Categoria.getArrCat()); // Convertir la lista actualizada a JSON
 
-        // Si el archivo existe, cargar su contenido en la lista
-        if (fichero.exists()) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(fichero))) {
-                Type listType = new TypeToken<ArrayList<Categoria>>() {}.getType();
-                listaCategorias = gson.fromJson(reader, listType);
-                if (listaCategorias == null) {
-                    listaCategorias = new ArrayList<>();
-                }
-            } catch (IOException e) {
-                Log.e(TAG, "guardarJson: Error al leer el archivo", e);
-            }
-        }
-
-        // Agregar la nueva categoría
-        listaCategorias.add(categoria);
-
-        // Convertir la lista actualizada a JSON
-        String jsonString = gson.toJson(listaCategorias);
-
-        // Guardar JSON en el fichero
+        // Guardar en el archivo
         try (BufferedWriter buf = new BufferedWriter(new FileWriter(fichero))) {
             buf.write(jsonString);
             buf.flush();
         } catch (IOException e) {
-            Log.e(TAG, "guardarJson: IOException", e);
+            Log.e(TAG, "Error al guardar el archivo JSON", e);
         }
     }
 
@@ -175,4 +156,28 @@ public class CategoriasFragment extends Fragment {
         return (state.equals(Environment.MEDIA_MOUNTED));
     }
 
+    @Override
+    public void OnItemClick(int position)
+    {
+        Toast.makeText(getContext(), "Posicion: " + position, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void OnItemLongClick(int position)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle("Eliminar categoría");
+        builder.setMessage("Si eliminas esta categoria eliminaras todos los tickets asociados a ella. ¿Estas seguro?");
+        builder.setPositiveButton("Eliminar", (dialog, which) -> {
+            Categoria.getArrCat().remove(position);
+            adapter.notifyItemRemoved(position);
+            adapter.notifyItemRangeChanged(position, Categoria.getArrCat().size());
+            guardarCategorias();
+        });
+        builder.setNegativeButton("No", (dialog, which) -> {
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }

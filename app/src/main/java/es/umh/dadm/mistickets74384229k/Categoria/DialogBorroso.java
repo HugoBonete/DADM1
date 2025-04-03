@@ -63,11 +63,9 @@ public class DialogBorroso extends DialogFragment {
                 Toast.makeText(getContext(), "Por favor, rellena todos los campos", Toast.LENGTH_LONG).show();
                 return;
             }
-
-            Categoria cat = new Categoria(nom, descort, desclarg, Miscelaneo.convertirImagenABase64(bp));
-
             if (categoriasFragment != null) {
-                categoriasFragment.guardarCategoria(cat); // Llamar directamente al método
+                Categoria cat = new Categoria(nom, descort, desclarg, Miscelaneo.convertirImagenABase64(bp));
+                categoriasFragment.guardarCategorias();
             } else {
                 Toast.makeText(getContext(), R.string.no_disponible, Toast.LENGTH_LONG).show();
             }

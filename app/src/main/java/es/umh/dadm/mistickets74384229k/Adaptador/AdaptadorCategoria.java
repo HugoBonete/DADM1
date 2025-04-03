@@ -19,15 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.umh.dadm.mistickets74384229k.Categoria.Categoria;
+import es.umh.dadm.mistickets74384229k.Interfaz.OnItemClickListener;
 import es.umh.dadm.mistickets74384229k.R;
 import es.umh.dadm.mistickets74384229k.Util.Miscelaneo;
 
-public class AdaptadorCategoria extends RecyclerView.Adapter<AdaptadorCategoria.ViewHolder> {
+public class AdaptadorCategoria extends RecyclerView.Adapter<AdaptadorCategoria.ViewHolder>{
+    private OnItemClickListener listener;
 
     private  Context context;
     private ArrayList<Categoria> listaCategorias;
-    public AdaptadorCategoria(@NonNull Context context, @NonNull ArrayList<Categoria> listaCategorias)
+    public AdaptadorCategoria(@NonNull Context context, @NonNull ArrayList<Categoria> listaCategorias, OnItemClickListener listener)
     {
+        this.listener = listener;
         this.context = context;
         this.listaCategorias = listaCategorias;
     }
@@ -46,6 +49,11 @@ public class AdaptadorCategoria extends RecyclerView.Adapter<AdaptadorCategoria.
         holder.image.setImageBitmap(Miscelaneo.convertirBase64AImagen(categoria.getImage()));
         holder.nombre.setText(categoria.getNombreCat());
         holder.descCorta.setText(categoria.getDescrCorta());
+
+        holder.itemView.setOnClickListener(v -> listener.OnItemClick(position));
+        holder.itemView.setOnLongClickListener(v -> {listener.OnItemLongClick(position);
+                return true;
+        });
     }
 
     @Override

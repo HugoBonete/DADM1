@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -77,13 +78,20 @@ public class CategoriasFragment extends Fragment implements OnItemClickListener 
             @Override
             public void onClick(View v) {
                 DialogBorroso dialog = new DialogBorroso(CategoriasFragment.this);
-                dialog.show(getParentFragmentManager(), "BlurDialog");
+                dialog.show(getParentFragmentManager(), "DialogoBorros");
             }
         });
         obtenerCategorias();
 
         getParentFragmentManager().setFragmentResultListener("nuevaCategoria", this, (requestKey, result) -> {
             if (result.getBoolean("categoriaAgregada"))
+            {
+                obtenerCategorias();
+            }
+        });
+
+        getParentFragmentManager().setFragmentResultListener("catEditada", this, (requestKey, result) -> {
+            if (result.getBoolean("categoriaEditada"))
             {
                 obtenerCategorias();
             }
@@ -159,7 +167,8 @@ public class CategoriasFragment extends Fragment implements OnItemClickListener 
     @Override
     public void OnItemClick(int position)
     {
-        Toast.makeText(getContext(), "Posicion: " + position, Toast.LENGTH_LONG).show();
+        DialogBorrosoEdit dialog = new DialogBorrosoEdit(CategoriasFragment.this, Categoria.getArrCat().get(position));
+        dialog.show(getParentFragmentManager(), "DialogoBorrosoEdit");
     }
 
     @Override

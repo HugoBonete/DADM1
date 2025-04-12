@@ -5,7 +5,7 @@
     android:id="@+id/fragment_categoria"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C5C5C5"
+    android:background="@color/grey"
     tools:context=".Categoria.CategoriasFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

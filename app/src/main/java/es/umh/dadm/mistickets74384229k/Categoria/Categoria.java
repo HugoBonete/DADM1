@@ -11,8 +11,7 @@ public class Categoria
     private String descrCorta;
     private String descLarga;
     private String image;
-    private static boolean inizializadas = false;
-    private static ArrayList<Categoria> arrCat = new ArrayList<>();
+    private static final ArrayList<Categoria> arrCat = new ArrayList<>();
 
     // Constructor
     public Categoria(String nombreCat, String descrCorta, String descLarga, String image)

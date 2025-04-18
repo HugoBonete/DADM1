@@ -14,4 +14,13 @@
     <string name = "no_disponible">No esta disponible</string>
     <string name="desc_img_ticket">foto_ticket</string>
     <string name = "edit_cat">Editar Categoria</string>
+    <string name = "nueva_tick_tit">Nuevo Ticket</string>
+    <string name="ruta_de_la_imagen">Ruta de la imagen</string>
+    <string name="guardar_ticket">Guardar Ticket</string>
+    <string name="descripci_n_larga">Descripción larga</string>
+    <string name="descripci_n_corta">Descripción corta</string>
+    <string name="fecha_del_ticket">Fecha del ticket</string>
+    <string name="precio">Precio</string>
+    <string name="agregar_imagen">Agregar imagen</string>
+    <string name="imagen_del_ticket">Imagen del ticket</string>
 </resources>

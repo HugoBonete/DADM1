@@ -59,7 +59,7 @@
             android:id="@+id/crear_cat_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:text="@string/form_btn_crearCat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,23 +70,23 @@
             android:id="@+id/img_cat"
             android:layout_width="147dp"
             android:layout_height="132dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_cat_desclarg"
             app:srcCompat="@drawable/baseline_add_a_photo_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_img_cat"
-            android:layout_width="36dp"
-            android:layout_height="34dp"
-            android:layout_marginTop="24dp"
-            android:clickable="true"
-            android:tint="#00FFFFFF"
-            app:backgroundTint="#494949"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:contentDescription="@string/agregar_imagen"
+            app:backgroundTint="@color/purple_500"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_cat" />
+            app:layout_constraintTop_toBottomOf="@+id/img_cat"
+            app:srcCompat="@drawable/baseline_add_a_photo_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

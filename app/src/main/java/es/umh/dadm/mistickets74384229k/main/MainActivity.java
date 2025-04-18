@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Habilitar EdgeToEdge después de setContentView()
         EdgeToEdge.enable(this);
-
+        Categoria.cargarCategorias(this);
         // Cargar el fragmento inicial solo si no hay uno ya cargado
         if (savedInstanceState == null) {
             replaceFrag(new InicioFragment());

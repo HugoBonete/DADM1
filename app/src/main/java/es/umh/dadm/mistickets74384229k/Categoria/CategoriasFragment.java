@@ -99,10 +99,10 @@ public class CategoriasFragment extends Fragment implements OnItemClickListener 
         return view;
     }
 
-    private void obtenerCategorias()
+    public void obtenerCategorias()
     {
         // Cargar las categorías desde el archivo
-        ArrayList<Categoria> categoriasGuardadas = cargarTexto();
+        ArrayList<Categoria> categoriasGuardadas = Categoria.cargarTexto(requireContext());
 
         // Reemplazar la lista actual con la lista cargada
         Categoria.getArrCat().clear();
@@ -113,23 +113,6 @@ public class CategoriasFragment extends Fragment implements OnItemClickListener 
         lvCat.setLayoutManager(new GridLayoutManager(getContext(), 2));
         lvCat.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-    }
-
-    public ArrayList<Categoria> cargarTexto()
-    {
-        File raiz = requireContext().getExternalFilesDir(null);
-        if (raiz == null) return new ArrayList<>();
-
-        File fichero = new File(raiz, "categorias.json");
-        if (!fichero.exists()) return new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(fichero))) {
-            Type listType = new TypeToken<ArrayList<Categoria>>() {}.getType();
-            return new Gson().fromJson(reader, listType);
-        } catch (IOException e) {
-            Log.e(TAG, "Error al leer el archivo JSON", e);
-            return new ArrayList<>();
-        }
     }
 
     public void guardarCategorias() {
@@ -156,12 +139,6 @@ public class CategoriasFragment extends Fragment implements OnItemClickListener 
     private boolean puedoEscribirMemoriaExterna() {
         String estado = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(estado);
-    }
-
-    private boolean puedoLeerMemoriaExterna()
-    {
-        String state = Environment.getExternalStorageState();
-        return (state.equals(Environment.MEDIA_MOUNTED));
     }
 
     @Override

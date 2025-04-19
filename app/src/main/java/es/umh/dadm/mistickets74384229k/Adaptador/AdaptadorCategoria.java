@@ -4,19 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import es.umh.dadm.mistickets74384229k.Categoria.Categoria;
 import es.umh.dadm.mistickets74384229k.Interfaz.OnItemClickListener;
@@ -25,7 +19,6 @@ import es.umh.dadm.mistickets74384229k.Util.Miscelaneo;
 
 public class AdaptadorCategoria extends RecyclerView.Adapter<AdaptadorCategoria.ViewHolder>{
     private OnItemClickListener listener;
-
     private  Context context;
     private ArrayList<Categoria> listaCategorias;
     public AdaptadorCategoria(@NonNull Context context, @NonNull ArrayList<Categoria> listaCategorias, OnItemClickListener listener)
@@ -70,8 +63,8 @@ public class AdaptadorCategoria extends RecyclerView.Adapter<AdaptadorCategoria.
         {
             super(itemView);
             image = itemView.findViewById(R.id.img_cat);
-            nombre = itemView.findViewById(R.id.nom_cat);
-            descCorta = itemView.findViewById(R.id.desc_cort_cat);
+            nombre = itemView.findViewById(R.id.nombre_cat);
+            descCorta = itemView.findViewById(R.id.desc_corta_cat);
 
         }
     }

@@ -3,30 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="20dp"
     app:cardCornerRadius="16dp">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/img_ticket"
+                android:id="@+id/img_ticket_cell"
                 android:layout_width="200dp"
                 android:layout_height="150dp"
-                android:scaleType="centerCrop"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/imagen_del_ticket"
-                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add_img_ticket"
@@ -37,7 +37,7 @@
                 app:backgroundTint="@color/purple_500"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_ticket"
+                app:layout_constraintTop_toBottomOf="@+id/img_ticket_cell"
                 app:srcCompat="@drawable/baseline_add_a_photo_24" />
 
             <Spinner
@@ -45,75 +45,72 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@id/fab_add_img_ticket"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/fab_add_img_ticket" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tick_precio"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:hint="@string/precio"
                 android:inputType="numberDecimal"
-                app:layout_constraintTop_toBottomOf="@id/spinner_categoria"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinner_categoria" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tick_fecha"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:hint="@string/fecha_del_ticket"
-                app:layout_constraintTop_toBottomOf="@id/tick_precio"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tick_precio" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tick_desc_corta"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:hint="@string/descripci_n_corta"
-                app:layout_constraintTop_toBottomOf="@id/tick_fecha"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tick_fecha" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tick_desc_larga"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/descripci_n_larga"
-                android:minLines="3"
-                android:maxLines="5"
+                android:layout_marginTop="16dp"
                 android:gravity="top"
-                app:layout_constraintTop_toBottomOf="@id/tick_desc_corta"
-                app:layout_constraintStart_toStartOf="parent"
+                android:hint="@string/descripci_n_larga"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tick_desc_corta" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tick_ruta_imagen"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:hint="@string/ruta_de_la_imagen"
-                android:enabled="false"
-                app:layout_constraintTop_toBottomOf="@id/tick_desc_larga"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tick_desc_larga" />
 
             <Button
                 android:id="@+id/btn_guardar_ticket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/guardar_ticket"
-                app:layout_constraintTop_toBottomOf="@id/tick_ruta_imagen"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="24dp"
+                android:text="@string/guardar_ticket"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tick_ruta_imagen" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

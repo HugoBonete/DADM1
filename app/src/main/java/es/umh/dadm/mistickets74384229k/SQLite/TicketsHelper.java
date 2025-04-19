@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+import es.umh.dadm.mistickets74384229k.Categoria.Categoria;
 import es.umh.dadm.mistickets74384229k.Ticket.Ticket;
 
 public class TicketsHelper extends SQLiteOpenHelper
@@ -17,14 +18,14 @@ public class TicketsHelper extends SQLiteOpenHelper
 
     Cursor cursor;
     SQLiteDatabase db;
-    String[] campos = new String[]{"id", "img", "precio", "fecha", "descCorta"
+    String[] campos = new String[]{"id", "img", "id_categoria", "precio", "fecha", "descCorta"
     , "descLarga", "localizacion"};
-    private static final String sqlCreate = "CREATE TABLE Tickets (id integer primary key autoincrement, img BLOB not null, precio int not null," +
+    private static final String sqlCreate = "CREATE TABLE Tickets (id integer primary key autoincrement, img BLOB not null, id_categoria integer not null, precio int not null," +
         "fecha text not null, descCorta text not null, descLarga text not null, localizacion text not null) ";
     private static final String nombreBD = "DBTickets";
-    public TicketsHelper(Context contexto, SQLiteDatabase.CursorFactory factory, int version)
+    public TicketsHelper(Context contexto, SQLiteDatabase.CursorFactory factory)
     {
-        super(contexto, nombreBD, factory, version);
+        super(contexto, nombreBD, factory, 5);
     }
 
     @Override
@@ -69,6 +70,7 @@ public class TicketsHelper extends SQLiteOpenHelper
     {
         ContentValues nuevoRegistro = new ContentValues();
         nuevoRegistro.put("img", ticket.getImg());
+        nuevoRegistro.put("id_categoria", ticket.getCat().getId());
         nuevoRegistro.put("precio", ticket.getPrecio());
         nuevoRegistro.put("fecha", ticket.getFecha());
         nuevoRegistro.put("descCorta", ticket.getDescCorta());
@@ -80,14 +82,23 @@ public class TicketsHelper extends SQLiteOpenHelper
     //ObtieneValores del cursor y devuelve ticket
     public Ticket obtenerValores()
     {
-        int id = cursor.getInt(0);
         byte[] img = cursor.getBlob(1);
-        int precio = cursor.getInt(2);
-        String fecha = cursor.getString(3);
-        String descCorta = cursor.getString(4);
-        String descLarga = cursor.getString(5);
-        String localizacion = cursor.getString(6);
+        int idCat = cursor.getInt(2);
+        int precio = cursor.getInt(3);
+        String fecha = cursor.getString(4);
+        String descCorta = cursor.getString(5);
+        String descLarga = cursor.getString(6);
+        String localizacion = cursor.getString(7);
 
-        return new Ticket(id, img, precio, fecha, descCorta, descLarga, localizacion);
+        Categoria cat = Categoria.encontrarId(idCat);
+
+
+        return new Ticket(img, cat, precio, fecha, descCorta, descLarga, localizacion);
+    }
+
+    public void eliminarTicketAsociados(int id)
+    {
+        db = getWritableDatabase();
+        db.delete("Tickets", "id_categoria = ?", new String[]{String.valueOf(id)});
     }
 }

@@ -32,6 +32,7 @@ import java.util.List;
 import es.umh.dadm.mistickets74384229k.Adaptador.AdaptadorCategoria;
 import es.umh.dadm.mistickets74384229k.Interfaz.OnItemClickListener;
 import es.umh.dadm.mistickets74384229k.R;
+import es.umh.dadm.mistickets74384229k.SQLite.TicketsHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -156,10 +157,17 @@ public class CategoriasFragment extends Fragment implements OnItemClickListener 
         builder.setTitle("Eliminar categoría");
         builder.setMessage("Si eliminas esta categoria eliminaras todos los tickets asociados a ella. ¿Estas seguro?");
         builder.setPositiveButton("Eliminar", (dialog, which) -> {
-            Categoria.getArrCat().remove(position);
-            adapter.notifyItemRemoved(position);
-            adapter.notifyItemRangeChanged(position, Categoria.getArrCat().size());
-            guardarCategorias();
+            try{
+                TicketsHelper usdbh = new TicketsHelper(getContext(), null);
+                usdbh.eliminarTicketAsociados(Categoria.getArrCat().get(position).getId());
+                Categoria.getArrCat().remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(position, Categoria.getArrCat().size());
+                guardarCategorias();
+            }catch (Exception e){
+                Toast.makeText(getContext(), "Error al eliminar la categoria", Toast.LENGTH_LONG).show();
+            };
+
         });
         builder.setNegativeButton("No", (dialog, which) -> {
         });

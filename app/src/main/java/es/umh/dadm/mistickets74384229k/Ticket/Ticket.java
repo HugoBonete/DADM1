@@ -2,21 +2,23 @@ package es.umh.dadm.mistickets74384229k.Ticket;
 
 import java.util.ArrayList;
 
+import es.umh.dadm.mistickets74384229k.Categoria.Categoria;
+
 public class Ticket
 {
-    private static int idContador = 0;
     private int id;
     private byte[] img;
-    private int precio;
+    private double precio;
     private String fecha;
     private String descCorta;
     private String descLarga;
     private String localizacion;
+    private Categoria cat;
     private static ArrayList<Ticket> arrTicket = new ArrayList<Ticket>();
 
-    public Ticket(byte[] img, int precio, String fecha, String descCorta, String descLarga, String localizacion)
+    public Ticket(byte[] img, Categoria cat,double precio, String fecha, String descCorta, String descLarga, String localizacion)
     {
-        id = idContador++;
+        this.cat = cat;
         this.img = img;
         this.precio = precio;
         this.fecha = fecha;
@@ -25,64 +27,34 @@ public class Ticket
         this.localizacion = localizacion;
         arrTicket.add(this);
     }
-    public Ticket(int id, byte[] img, int precio, String fecha, String descCorta, String descLarga, String localizacion)
+
+    public Categoria getCat()
     {
-        id = idContador++;
-        this.img = img;
-        this.precio = precio;
-        this.fecha = fecha;
-        this.descCorta = descCorta;
-        this.descLarga = descLarga;
-        this.localizacion = localizacion;
-        arrTicket.add(this);
+        return cat;
     }
 
     public byte[] getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
-        this.img = img;
-    }
-
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
-    }
-
-    public void setPrecio(int precio) {
-        this.precio = precio;
     }
 
     public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
     public String getDescCorta() {
         return descCorta;
-    }
-
-    public void setDescCorta(String descCorta) {
-        this.descCorta = descCorta;
     }
 
     public String getDescLarga() {
         return descLarga;
     }
 
-    public void setDescLarga(String descLarga) {
-        this.descLarga = descLarga;
-    }
-
     public String getLocalizacion() {
         return localizacion;
-    }
-
-    public void setLocalizacion(String localizacion) {
-        this.localizacion = localizacion;
     }
 
     public ArrayList<Ticket> getArrTicket() {

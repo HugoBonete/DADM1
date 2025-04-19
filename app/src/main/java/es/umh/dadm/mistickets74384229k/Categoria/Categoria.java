@@ -28,7 +28,8 @@ public class Categoria
     private String image;
     private static final ArrayList<Categoria> arrCat = new ArrayList<>();
 
-    // Constructor
+    public Categoria() {}
+
     public Categoria(String nombreCat, String descrCorta, String descLarga, String image)
     {
         this.id = contadorId++; // Se incrementa el ID estático en cada nueva instancia
@@ -95,6 +96,12 @@ public class Categoria
 
         arrCat.clear();
         arrCat.addAll(categoriasGuardadas);
+        for (int i = 0; i < arrCat.size(); i++)
+        {
+            if (arrCat.get(i).getId() >= contadorId) {
+                contadorId = arrCat.get(i).getId() + 1;
+            }
+        }
     }
 
     public static ArrayList<Categoria> cargarTexto(Context context)
@@ -112,6 +119,19 @@ public class Categoria
             Log.e(TAG, "Error al leer el archivo JSON", e);
             return new ArrayList<>();
         }
+    }
+
+    public static Categoria encontrarId(int id)
+    {
+        ArrayList<Categoria> arr = getArrCat();
+        for(int i = 0; i < arr.size(); i++)
+        {
+            if(arr.get(i).getId() == id)
+            {
+                return arr.get(i);
+            }
+        }
+        return null;
     }
 
     @NonNull

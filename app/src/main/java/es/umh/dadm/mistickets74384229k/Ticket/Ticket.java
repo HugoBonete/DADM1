@@ -27,6 +27,22 @@ public class Ticket
         this.localizacion = localizacion;
         arrTicket.add(this);
     }
+    public Ticket(int id,byte[] img, Categoria cat,double precio, String fecha, String descCorta, String descLarga, String localizacion)
+    {
+        this.id = id;
+        this.cat = cat;
+        this.img = img;
+        this.precio = precio;
+        this.fecha = fecha;
+        this.descCorta = descCorta;
+        this.descLarga = descLarga;
+        this.localizacion = localizacion;
+        arrTicket.add(this);
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public Categoria getCat()
     {
@@ -35,6 +51,34 @@ public class Ticket
 
     public byte[] getImg() {
         return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setDescCorta(String descCorta) {
+        this.descCorta = descCorta;
+    }
+
+    public void setDescLarga(String descLarga) {
+        this.descLarga = descLarga;
+    }
+
+    public void setLocalizacion(String localizacion) {
+        this.localizacion = localizacion;
+    }
+
+    public void setCat(Categoria cat) {
+        this.cat = cat;
     }
 
     public double getPrecio() {
@@ -57,7 +101,7 @@ public class Ticket
         return localizacion;
     }
 
-    public ArrayList<Ticket> getArrTicket() {
+    public static ArrayList<Ticket> getArrTicket() {
         return arrTicket;
     }
 }

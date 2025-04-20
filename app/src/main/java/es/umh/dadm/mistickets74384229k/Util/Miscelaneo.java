@@ -5,13 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
-import androidx.activity.result.ActivityResultCallerLauncher;
 import androidx.activity.result.ActivityResultLauncher;
 
 import java.io.ByteArrayOutputStream;
 
+//Clase de funciones extras
 public class Miscelaneo
 {
+    //Convierte de base64 a imagen
     public static Bitmap convertirBase64AImagen(String base)
     {
         byte[] base64String;
@@ -19,6 +20,7 @@ public class Miscelaneo
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
+    //Convierte de imagen a base46
     public static String convertirImagenABase64(Bitmap bitmap)
     {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -27,17 +29,21 @@ public class Miscelaneo
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
+    //Convierte de byte[] a bitmap
     public static Bitmap convertirByteABitmap(byte[] img)
     {
         return BitmapFactory.decodeByteArray(img, 0, img.length);
     }
 
+    //Convierte de Bitmap a byte[]
     public static byte[] convertirBitmapAByte(Bitmap bp)
     {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bp.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream.toByteArray();
     }
+
+    //Funcion para abrir el intent de la galeria
     public static void abrirGaleria(ActivityResultLauncher<Intent> galeriaIntent) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");

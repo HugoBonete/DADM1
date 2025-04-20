@@ -39,12 +39,25 @@
                 android:gravity="center"
                 android:text="TextView"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/texto_cell"/>
+
+            <TextView
+                android:id="@+id/cat_tick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:shadowColor="#FFFFFF"
+                android:text="TextView"
+                android:textColor="@color/texto_cell"
+                android:textColorHighlight="#FBFBFB"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/precio_tick"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="TextView"

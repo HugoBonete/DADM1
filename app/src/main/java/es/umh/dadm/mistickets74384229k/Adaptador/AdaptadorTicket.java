@@ -1,5 +1,6 @@
 package es.umh.dadm.mistickets74384229k.Adaptador;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,15 @@ import es.umh.dadm.mistickets74384229k.R;
 import es.umh.dadm.mistickets74384229k.Ticket.Ticket;
 import es.umh.dadm.mistickets74384229k.Util.Miscelaneo;
 
+//Adaptador para mostrar todos los tickets en el recyclerView
 public class AdaptadorTicket extends RecyclerView.Adapter<AdaptadorTicket.ViewHolder>
 {
     private final OnItemClickListener listener;
-    private  Context context;
-    private ArrayList<Ticket> listaTickets;
+    private final Context context;
+    private final ArrayList<Ticket> listaTickets;
+    public ArrayList<Ticket> getListaTickets() {
+        return listaTickets;
+    }
 
     public AdaptadorTicket(@NonNull Context context, @NonNull ArrayList<Ticket> listaTickets, OnItemClickListener listener)
     {
@@ -40,12 +45,14 @@ public class AdaptadorTicket extends RecyclerView.Adapter<AdaptadorTicket.ViewHo
         return new AdaptadorTicket.ViewHolder(view);
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(@NonNull AdaptadorTicket.ViewHolder holder, int position)
     {
         Ticket ticket = listaTickets.get(position);
         holder.img.setImageBitmap(Miscelaneo.convertirByteABitmap(ticket.getImg()));
         holder.descCorta.setText(ticket.getDescCorta());
+        holder.categoria.setText(ticket.getCat().getNombreCat());
         holder.precio.setText(String.format("%.2f €", ticket.getPrecio()));
 
         holder.itemView.setOnClickListener(v -> listener.OnItemClick(position));
@@ -61,7 +68,7 @@ public class AdaptadorTicket extends RecyclerView.Adapter<AdaptadorTicket.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
         ImageView img;
-        TextView precio, descCorta;
+        TextView precio, descCorta, categoria;
 
         public ViewHolder(@NonNull View itemView)
         {
@@ -69,6 +76,7 @@ public class AdaptadorTicket extends RecyclerView.Adapter<AdaptadorTicket.ViewHo
             img = itemView.findViewById(R.id.img_ticket_cell);
             precio = itemView.findViewById(R.id.precio_tick);
             descCorta = itemView.findViewById(R.id.desc_corta_tick);
+            categoria = itemView.findViewById(R.id.cat_tick);
 
         }
     }

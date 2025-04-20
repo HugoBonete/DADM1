@@ -16,7 +16,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import es.umh.dadm.mistickets74384229k.R;
 
 public class Categoria
 {
@@ -90,6 +89,7 @@ public class Categoria
     {
         return arrCat;
     }
+    //Funcion para añadir las categorias del JSON al Array de categorias
     public static void cargarCategorias(Context context) {
         // Suponiendo que cargarTexto() es tu función para leer de archivo
         ArrayList<Categoria> categoriasGuardadas = cargarTexto(context);
@@ -104,6 +104,7 @@ public class Categoria
         }
     }
 
+    //Funcion para cargar las categorias del JSON  aun Array
     public static ArrayList<Categoria> cargarTexto(Context context)
     {
         File raiz = context.getExternalFilesDir(null);
@@ -121,6 +122,7 @@ public class Categoria
         }
     }
 
+    //Funcion para encontrar la categoria con un id especificado
     public static Categoria encontrarId(int id)
     {
         ArrayList<Categoria> arr = getArrCat();
@@ -132,6 +134,21 @@ public class Categoria
             }
         }
         return null;
+    }
+
+    //Funcion para encontrar la posicion de una categoria en el array de categorias
+    public static int posicionId(Categoria cat)
+    {
+        int position = -1;
+        for(int i = 0; i < arrCat.size(); i++)
+        {
+            if(arrCat.get(i).getId() == cat.getId() )
+            {
+                position = i;
+                break;
+            }
+        }
+        return position;
     }
 
     @NonNull

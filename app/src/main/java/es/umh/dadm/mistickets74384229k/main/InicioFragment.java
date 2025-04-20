@@ -27,7 +27,6 @@ public class InicioFragment extends Fragment {
     private String mParam2;
 
     public InicioFragment() {
-        // Required empty public constructor
     }
 
     /**

@@ -5,7 +5,6 @@ import static android.app.Activity.RESULT_OK;
 
 import static es.umh.dadm.mistickets74384229k.Util.Miscelaneo.abrirGaleria;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -46,6 +45,7 @@ public class DialogBorroso extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Para poder acceder a la galeria
         galeriaIntent = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -83,18 +83,17 @@ public class DialogBorroso extends DialogFragment {
         btn_add_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Escoger Foto");
-                builder.setMessage("¿Desea escoger la foto desde la camara o la galeria?");
-                builder.setPositiveButton("Galeria", ((dialog, which) -> {
-                    abrirGaleria(galeriaIntent);
-                }));
-                builder.setNegativeButton("Camara", (dialog, which) -> {
-                    Intent img_int = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(img_int, CAPTURAR_IMAGEN);
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Escoger Foto")
+                        .setMessage("¿Desea escoger la foto desde la cámara o la galería?")
+                        .setPositiveButton("Galería", (dialog, which) -> {
+                            abrirGaleria(galeriaIntent);
+                        })
+                        .setNegativeButton("Cámara", (dialog, which) -> {
+                            Intent img_int = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(img_int, CAPTURAR_IMAGEN);
+                        })
+                        .show();
             }
         });
 
@@ -119,7 +118,6 @@ public class DialogBorroso extends DialogFragment {
             } else {
                 Toast.makeText(getContext(), R.string.no_disponible, Toast.LENGTH_LONG).show();
             }
-
             Bundle result = new Bundle();
             result.putBoolean("categoriaAgregada", true);
             getParentFragmentManager().setFragmentResult("nuevaCategoria", result);

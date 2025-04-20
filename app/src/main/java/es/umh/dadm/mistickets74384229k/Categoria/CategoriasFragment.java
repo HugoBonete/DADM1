@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,17 +16,12 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import es.umh.dadm.mistickets74384229k.Adaptador.AdaptadorCategoria;
 import es.umh.dadm.mistickets74384229k.Interfaz.OnItemClickListener;
@@ -72,7 +66,6 @@ public class CategoriasFragment extends Fragment implements OnItemClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_categorias, container, false);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_cat);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +93,7 @@ public class CategoriasFragment extends Fragment implements OnItemClickListener 
         return view;
     }
 
+    //Funcion para actualizar la lista de categorias con la actualizada
     public void obtenerCategorias()
     {
         // Cargar las categorías desde el archivo
@@ -116,6 +110,7 @@ public class CategoriasFragment extends Fragment implements OnItemClickListener 
         adapter.notifyDataSetChanged();
     }
 
+    //Funcion para guardar las categorias del array en el JSON
     public void guardarCategorias() {
         if (!puedoEscribirMemoriaExterna()) {
             Toast.makeText(getContext(), R.string.no_disponible, Toast.LENGTH_LONG).show();
@@ -137,6 +132,7 @@ public class CategoriasFragment extends Fragment implements OnItemClickListener 
         }
     }
 
+    //Funcion para comprobar si tienes permisos para escribir en memoria externa
     private boolean puedoEscribirMemoriaExterna() {
         String estado = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(estado);

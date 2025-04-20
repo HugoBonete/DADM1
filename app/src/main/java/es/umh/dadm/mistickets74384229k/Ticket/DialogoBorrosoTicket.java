@@ -5,8 +5,6 @@ import static android.app.Activity.RESULT_OK;
 
 import static es.umh.dadm.mistickets74384229k.Util.Miscelaneo.abrirGaleria;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -28,6 +26,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
@@ -51,6 +50,7 @@ public class DialogoBorrosoTicket extends DialogFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Para poder acceder a la galeria
         galeriaIntent = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -83,18 +83,17 @@ public class DialogoBorrosoTicket extends DialogFragment
         btn_add_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Escoger Foto");
-                builder.setMessage("¿Desea escoger la foto desde la camara o la galeria?");
-                builder.setPositiveButton("Galeria", ((dialog, which) -> {
-                    abrirGaleria(galeriaIntent);
-                }));
-                builder.setNegativeButton("Camara", (dialog, which) -> {
-                    Intent img_int = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(img_int, CAPTURAR_IMAGEN);
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Escoger Foto")
+                        .setMessage("¿Desea escoger la foto desde la cámara o la galería?")
+                        .setPositiveButton("Galería", (dialog, which) -> {
+                            abrirGaleria(galeriaIntent);
+                        })
+                        .setNegativeButton("Cámara", (dialog, which) -> {
+                            Intent img_int = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(img_int, CAPTURAR_IMAGEN);
+                        })
+                        .show();
             }
         });
 
@@ -104,19 +103,22 @@ public class DialogoBorrosoTicket extends DialogFragment
         EditText txt_fecha = view.findViewById(R.id.tick_fecha);
         EditText txt_loc = view.findViewById(R.id.tick_ruta_imagen);
         txt_fecha.setOnClickListener(v -> {
-            final Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Selecciona una fecha")
+                    .build();
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
-                    (view1, year1, month1, dayOfMonth) -> {
-                        // Formatear la fecha (agrega 1 al mes porque empieza desde 0)
-                        String fecha = String.format("%04d-%02d-%02d", year1, month1 + 1, dayOfMonth);
-                        txt_fecha.setText(fecha);
-                    }, year, month, day);
+            datePicker.addOnPositiveButtonClickListener(selection -> {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(selection);
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1;
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            datePickerDialog.show();
+                String fecha = String.format("%04d-%02d-%02d", year, month, day);
+                txt_fecha.setText(fecha);
+            });
+
+            datePicker.show(getParentFragmentManager(), "MaterialDatePicker");
         });
 
 
@@ -149,7 +151,7 @@ public class DialogoBorrosoTicket extends DialogFragment
                     }
                     catch(Exception e)
                     {
-                        Toast.makeText(getContext(), "Error al guardar el ticket", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Error al guardar el ticket, porfavor rellena todos los campos", Toast.LENGTH_LONG).show();
                     }
 
                 }else {
@@ -173,6 +175,7 @@ public class DialogoBorrosoTicket extends DialogFragment
         }
     }
 
+    //Funcion para obtener la imagen de la camara
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if(requestCode == CAPTURAR_IMAGEN)

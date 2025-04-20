@@ -17,10 +17,11 @@ import es.umh.dadm.mistickets74384229k.Interfaz.OnItemClickListener;
 import es.umh.dadm.mistickets74384229k.R;
 import es.umh.dadm.mistickets74384229k.Util.Miscelaneo;
 
+//Adaptador para mostrar la categoria en su celda
 public class AdaptadorCategoria extends RecyclerView.Adapter<AdaptadorCategoria.ViewHolder>{
-    private OnItemClickListener listener;
-    private  Context context;
-    private ArrayList<Categoria> listaCategorias;
+    private final OnItemClickListener listener;
+    private final Context context;
+    private final ArrayList<Categoria> listaCategorias;
     public AdaptadorCategoria(@NonNull Context context, @NonNull ArrayList<Categoria> listaCategorias, OnItemClickListener listener)
     {
         this.listener = listener;
@@ -28,6 +29,7 @@ public class AdaptadorCategoria extends RecyclerView.Adapter<AdaptadorCategoria.
         this.listaCategorias = listaCategorias;
     }
 
+    @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View view = LayoutInflater.from(context).inflate(R.layout.cat_cell, parent, false);

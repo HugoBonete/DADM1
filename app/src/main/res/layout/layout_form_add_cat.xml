@@ -68,8 +68,8 @@
 
         <ImageView
             android:id="@+id/img_cat_cell"
-            android:layout_width="147dp"
-            android:layout_height="132dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

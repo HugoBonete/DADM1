@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import es.umh.dadm.mistickets74384229k.Categoria.Categoria;
 import es.umh.dadm.mistickets74384229k.Ticket.Ticket;
 
+//Clase de SQLiteHelper
 public class TicketsHelper extends SQLiteOpenHelper
 {
 
@@ -20,12 +21,13 @@ public class TicketsHelper extends SQLiteOpenHelper
     SQLiteDatabase db;
     String[] campos = new String[]{"id", "img", "id_categoria", "precio", "fecha", "descCorta"
     , "descLarga", "localizacion"};
-    private static final String sqlCreate = "CREATE TABLE Tickets (id integer primary key autoincrement, img BLOB not null, id_categoria integer not null, precio int not null," +
-        "fecha text not null, descCorta text not null, descLarga text not null, localizacion text not null) ";
+    private static final String sqlCreate = "CREATE TABLE Tickets (id integer primary key autoincrement, img BLOB not null, id_categoria integer not null, " +
+            "precio double not null,fecha text not null, descCorta text not null, descLarga text not null, " +
+            "localizacion text not null) ";
     private static final String nombreBD = "DBTickets";
     public TicketsHelper(Context contexto, SQLiteDatabase.CursorFactory factory)
     {
-        super(contexto, nombreBD, factory, 5);
+        super(contexto, nombreBD, factory, 7);
     }
 
     @Override
@@ -82,9 +84,10 @@ public class TicketsHelper extends SQLiteOpenHelper
     //ObtieneValores del cursor y devuelve ticket
     public Ticket obtenerValores()
     {
+        int id = cursor.getInt(0);
         byte[] img = cursor.getBlob(1);
         int idCat = cursor.getInt(2);
-        int precio = cursor.getInt(3);
+        double precio = cursor.getDouble(3);
         String fecha = cursor.getString(4);
         String descCorta = cursor.getString(5);
         String descLarga = cursor.getString(6);
@@ -92,13 +95,36 @@ public class TicketsHelper extends SQLiteOpenHelper
 
         Categoria cat = Categoria.encontrarId(idCat);
 
-
-        return new Ticket(img, cat, precio, fecha, descCorta, descLarga, localizacion);
+        return new Ticket(id, img, cat, precio, fecha, descCorta, descLarga, localizacion);
     }
 
+    //Elimina todos los tickets asociados a la categoria que se esta eliminando
     public void eliminarTicketAsociados(int id)
     {
         db = getWritableDatabase();
         db.delete("Tickets", "id_categoria = ?", new String[]{String.valueOf(id)});
+    }
+
+    //Elimina un tcket en especifico
+    public void eliminarTicket(int id)
+    {
+        db = getWritableDatabase();
+        db.delete("Tickets", "id = ?", new String[]{String.valueOf(id)});
+    }
+    //Actualiza los valores de un ticket
+    public void actualizarTicket(Ticket ticket) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("id_categoria", ticket.getCat().getId());
+        values.put("descCorta", ticket.getDescCorta());
+        values.put("descLarga", ticket.getDescLarga());
+        values.put("precio", ticket.getPrecio());
+        values.put("fecha", ticket.getFecha());
+        values.put("img", ticket.getImg());
+        values.put("localizacion", ticket.getLocalizacion());
+
+        db.update("Tickets", values, "id = ?", new String[]{String.valueOf(ticket.getId())});
+        db.close();
     }
 }

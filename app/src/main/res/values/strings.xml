@@ -23,4 +23,7 @@
     <string name="precio">Precio</string>
     <string name="agregar_imagen">Agregar imagen</string>
     <string name="imagen_del_ticket">Imagen del ticket</string>
+    <string name="textview">TextView</string>
+    <string name="foto">Foto</string>
+    <string name="txt_inicio">Bienvenido a mi practica espero disfrutes de la experiecia de usar esta practica tan chula. ALA MADRID!!</string>
 </resources>
